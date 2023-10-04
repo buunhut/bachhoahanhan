@@ -335,9 +335,14 @@ function App() {
         </div>
       </div>
 
+      <div id="overlay" className={showCart ? "show" : ""} onClick={handleGioHang}>
+
+      </div>
+
       <div id="cart" className={showCart ? "showCart" : ""}>
         <button type="button" className="myClose" onClick={handleGioHang}>
-          <i className="fa-solid fa-xmark"></i> close
+          Đóng
+          {/* <i className="fa-solid fa-xmark"></i> */}
         </button>
         <p>Giỏ hàng của bạn</p>
       </div>
