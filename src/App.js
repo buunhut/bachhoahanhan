@@ -345,6 +345,78 @@ function App() {
           {/* <i className="fa-solid fa-xmark"></i> */}
         </button>
         <p>Giỏ hàng của bạn</p>
+        <table>
+          <tbody>
+            <tr>
+              <td className="hinhAnh">
+                hình
+              </td>
+              <td>
+                Mì hảo hảo tôm chua cay
+                <div className="smallText">
+                  <span className="delete"><i className="fa-regular fa-trash-can"></i></span>
+                  <span className="donGia">3,400đ</span>
+                  <i className="fa-solid fa-minus giam"></i>
+                  <span className="soLuong">10</span>
+                  <i className="fa-solid fa-plus tang"></i>
+                </div>
+
+              </td>
+              <td className="thanhTien">
+                34,000đ
+              </td>
+            </tr>
+            <tr>
+              <td className="hinhAnh">
+                hình
+              </td>
+              <td>
+                Mì hảo hảo tôm chua cay
+                <div className="smallText">
+                  <span className="delete"><i className="fa-regular fa-trash-can"></i></span>
+                  <span className="donGia">360,400đ</span>
+                  <i className="fa-solid fa-minus giam"></i>
+                  <span className="soLuong">10</span>
+                  <i className="fa-solid fa-plus tang"></i>
+                </div>
+
+              </td>
+              <td className="thanhTien">
+                34,000đ
+              </td>
+            </tr>
+            <tr>
+              <td className="hinhAnh">
+                hình
+              </td>
+              <td>
+                Mì hảo hảo tôm chua cay
+                <div className="smallText">
+                  <span className="delete"><i className="fa-regular fa-trash-can"></i></span>
+                  <span className="donGia">79.903,400đ</span>
+                  <i className="fa-solid fa-minus giam"></i>
+                  <span className="soLuong">10</span>
+                  <i className="fa-solid fa-plus tang"></i>
+                </div>
+
+              </td>
+              <td className="thanhTien">
+                179.903,400đ
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+
+
+        <div className="cartBottom">
+          <div>
+            <p>Tổng: 91,000,000đ</p>
+          </div>
+          <div>
+            <button>Thanh toán</button>
+          </div>
+        </div>
       </div>
     </div>
   );
