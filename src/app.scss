@@ -336,7 +336,7 @@
       justify-content: flex-start;
       flex-wrap: wrap;
       gap: 10px;
-      width: 1060px;
+      width: 850px;
       margin: 0 auto;
       padding: 0 10px;
 
@@ -831,15 +831,15 @@
 
     .mainContent {
       display: flex;
-      justify-content: space-around;
+      justify-content: flex-start;
       flex-wrap: wrap;
       gap: 10px;
-      width: 416px;
+      width: 430px;
       margin: 0 auto;
       padding: 0 10px;
 
       .proItem {
-        width: 193px;
+        width: 200px;
         border-radius: 10px;
         padding: 10px;
         position: relative;
@@ -1083,12 +1083,12 @@
       justify-content: flex-start;
       flex-wrap: wrap;
       gap: 10px;
-      width: 416px;
+      width: 410px;
       margin: 0 auto;
       padding: 0 10px;
 
       .proItem {
-        width: 193px;
+        width: 190px;
         border-radius: 10px;
         padding: 10px;
         position: relative;
