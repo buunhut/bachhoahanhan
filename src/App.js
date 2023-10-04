@@ -149,19 +149,19 @@ function App() {
     setListSanPham(updatedListSanPham);
   };
 
-  const handleChangeSoLuong = (id, event) => {
-    const value = Number(event.target.value.replaceAll(",", "")); // Chuyển giá trị thành số nguyên
-    const updatedListSanPham = listSanPham.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          order: isNaN(value) ? 1 : value, // Nếu giá trị không hợp lệ thì đặt lại là 1
-        };
-      }
-      return item;
-    });
-    setListSanPham(updatedListSanPham);
-  };
+  // const handleChangeSoLuong = (id, event) => {
+  //   const value = Number(event.target.value.replaceAll(",", "")); // Chuyển giá trị thành số nguyên
+  //   const updatedListSanPham = listSanPham.map((item) => {
+  //     if (item.id === id) {
+  //       return {
+  //         ...item,
+  //         order: isNaN(value) ? 1 : value, // Nếu giá trị không hợp lệ thì đặt lại là 1
+  //       };
+  //     }
+  //     return item;
+  //   });
+  //   setListSanPham(updatedListSanPham);
+  // };
 
   const handleTangSoLuong = (id) => {
     const updatedListSanPham = listSanPham.map((item) => {
@@ -256,13 +256,14 @@ function App() {
                         ></i>
                       </div>
                       <div>
-                        <input
+                        {/* <input
                           type="text"
                           id={id}
                           name={id}
                           value={order.toLocaleString()}
                           onChange={(event) => handleChangeSoLuong(id, event)}
-                        />
+                        /> */}
+                        <h3>{order.toLocaleString()}</h3>
                       </div>
                       <div>
                         <i
