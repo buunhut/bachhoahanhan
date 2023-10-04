@@ -129,7 +129,7 @@ function App() {
     // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
     setListSanPham(updatedListSanPham);
   };
-
+  //giảm số lượng
   const handleGiamSoLuong = (id) => {
     const updatedListSanPham = listSanPham.map((item) => {
       if (item.id === id) {
@@ -141,6 +141,21 @@ function App() {
         } else {
           return item;
         }
+      } else {
+        return item;
+      }
+    });
+    // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
+    setListSanPham(updatedListSanPham);
+  };
+  //tăng số lượng
+  const handleTangSoLuong = (id) => {
+    const updatedListSanPham = listSanPham.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          order: item.order + 1,
+        };
       } else {
         return item;
       }
@@ -163,20 +178,11 @@ function App() {
   //   setListSanPham(updatedListSanPham);
   // };
 
-  const handleTangSoLuong = (id) => {
-    const updatedListSanPham = listSanPham.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          order: item.order + 1,
-        };
-      } else {
-        return item;
-      }
-    });
-    // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
-    setListSanPham(updatedListSanPham);
-  };
+  //click giỏ hàng
+  const [showCart, setShowCart] = useState(false)
+  const handleGioHang = () => {
+    setShowCart(!showCart)
+  }
 
   return (
     <div className="App">
@@ -202,8 +208,8 @@ function App() {
             />
             <i className="fa-solid fa-magnifying-glass myGlass"></i>
             <div className="gioHang">
-              <p></p>
-              <i className="fa-solid fa-cart-shopping"></i>
+              <p onClick={handleGioHang}>10</p>
+              <i className="fa-solid fa-cart-shopping" onClick={handleGioHang}></i>
             </div>
           </div>
         </div>
@@ -251,7 +257,7 @@ function App() {
                     <div className="soLuong">
                       <div>
                         <i
-                          className="fa-solid fa-minus"
+                          className="fa-solid fa-minus giam"
                           onClick={() => handleGiamSoLuong(id)}
                         ></i>
                       </div>
@@ -267,7 +273,7 @@ function App() {
                       </div>
                       <div>
                         <i
-                          className="fa-solid fa-plus"
+                          className="fa-solid fa-plus tang"
                           onClick={() => handleTangSoLuong(id)}
                         ></i>
                       </div>
@@ -327,6 +333,10 @@ function App() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div id="cart" className={showCart ? "showCart" : ""}>
+        <p onClick={handleGioHang}>close</p>
       </div>
     </div>
   );
