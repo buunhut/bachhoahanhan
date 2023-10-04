@@ -336,7 +336,10 @@ function App() {
       </div>
 
       <div id="cart" className={showCart ? "showCart" : ""}>
-        <p onClick={handleGioHang}>close</p>
+        <button type="button" className="myClose" onClick={handleGioHang}>
+          <i className="fa-solid fa-xmark"></i> close
+        </button>
+        <p>Giỏ hàng của bạn</p>
       </div>
     </div>
   );
