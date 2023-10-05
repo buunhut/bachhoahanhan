@@ -593,7 +593,7 @@ function App() {
           </div>
           <div>
             <button type="button" onClick={handleThanhToan}>
-              Thanh toán
+              Đặt hàng ngay
             </button>
           </div>
         </div>

@@ -344,6 +344,7 @@
     justify-content: space-between;
     align-items: center;
     button.myClose {
+      font-size: 14px;
       text-align: center;
       position: absolute;
       top: 20px;
@@ -355,6 +356,7 @@
       border-radius: 5px;
       cursor: pointer;
       transition: all 0.3s;
+
       &:hover {
         background-color: rgb(233, 14, 14);
       }
@@ -441,6 +443,7 @@
                 text-align: right;
                 padding: 2px 5px;
                 border-radius: 10px;
+                text-align: center;
               }
               i.tang {
                 font-size: 12px;
@@ -456,6 +459,7 @@
             }
             &.thanhTien {
               text-align: right;
+              color: red;
               // width: 100px;
               div {
                 margin-bottom: 10px;
@@ -493,12 +497,11 @@
       width: 50%;
       // background-color: blue;
       p {
-        // background-color: white;
-        // line-height: 45px;
-        color: rgb(57, 48, 48);
-        font-size: 16px;
+        color: red;
+        font-size: 18px;
         font-weight: 500;
         margin: 0;
+        text-align: center;
       }
       button {
         margin: 0 auto;
