@@ -40,17 +40,36 @@ function App() {
   };
 
   //function
-  const capNhatGioHang = () => {
-    const gioHang = JSON.parse(localStorage.getItem("gioHang"));
-    if (gioHang) {
-      setGioHang(gioHang);
+  const luuLocal = (key, data) => {
+    localStorage.setItem(key, JSON.stringify(data))
+  }
+
+  const goiLocal = (key) => {
+    if (key === 'listSanPham') {
+      const data = JSON.parse(localStorage.getItem(key))
+      if (data) {
+        setListSanPham(data)
+      }
     }
-  };
+  }
 
-  const capNhatLocal = (gioHang) => {
-    localStorage.setItem("gioHang", JSON.stringify(gioHang));
-  };
+  const capNhatLocal = (key, data) => {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
 
+  // const capNhatGioHang = () => {
+  //   const gioHang = JSON.parse(localStorage.getItem("gioHang"));
+  //   if (gioHang) {
+  //     setGioHang(gioHang);
+  //   }
+  // };
+
+  // const capNhatLocal = (gioHang) => {
+  //   localStorage.setItem("gioHang", JSON.stringify(gioHang));
+  // };
+
+
+  //dữ liệu gọi từ backend
   const data = [
     {
       id: 1,
@@ -165,11 +184,30 @@ function App() {
 
   const [listSanPham, setListSanPham] = useState(data);
 
-  const [gioHang, setGioHang] = useState([]);
-  let tongTien = 0;
+
+  //lấy ra những sản phẩm đã đặt
+  let tongTien = 0
+  const gioHang = listSanPham?.filter((item) => {
+    if (item.order > 0) {
+      return item
+    }
+
+
+    // let { id, hinhAnh, tenSp, giaVon, giamGia, gif, order } = item;
+    // if (order > 0) {
+    //   let giaBan = giaVon - (giaVon * giamGia) / 100;
+    //   let data = {
+    //     ...item,
+    //     giaBan
+    //   }
+    //   return data
+    // }
+  })
+
+  console.log(gioHang)
 
   useEffect(() => {
-    capNhatGioHang();
+    goiLocal('listSanPham')
   }, []);
 
   //click thêm vào giỏ
@@ -181,41 +219,48 @@ function App() {
       }
       return item; // Giữ nguyên các sản phẩm khác
     });
+
+    //lưu sản phẩm
+    luuLocal('listSanPham', updatedListSanPham)
+
     // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
     setListSanPham(updatedListSanPham);
 
-    //đọc store
-    const localStore = JSON.parse(localStorage.getItem("gioHang"));
-    if (localStore === null) {
-      gioHang.push(data);
-      //lưu local
-      localStorage.setItem("gioHang", JSON.stringify(gioHang));
-    } else {
-      setGioHang(localStore);
-      //kiểm tra xem có trùng sản phẩm không?
-      //trùng thì cộng dồn số lượng, không trùng thì thêm mới
-      const checkSanPham = gioHang.find((item) => item.id === id);
-      if (checkSanPham) {
-        const capNhatGioHang = gioHang.map((item) => {
-          if (item.id === id) {
-            return {
-              ...item,
-              order: item.order + data.order,
-            };
-          } else {
-            return {
-              ...item,
-            };
-          }
-        });
-        localStorage.setItem("gioHang", JSON.stringify(capNhatGioHang));
-      } else {
-        gioHang.push(data);
-        localStorage.setItem("gioHang", JSON.stringify(gioHang));
-      }
-    }
 
-    capNhatGioHang();
+
+    // // đọc store
+    // const localStore = JSON.parse(localStorage.getItem("gioHang"));
+    // if (localStore === null) {
+    //   gioHang.push(data);
+    //   //lưu local
+    //   localStorage.setItem("gioHang", JSON.stringify(gioHang));
+    // } else {
+    //   setGioHang(localStore);
+    //   //kiểm tra xem có trùng sản phẩm không?
+    //   //trùng thì cộng dồn số lượng, không trùng thì thêm mới
+    //   const checkSanPham = gioHang.find((item) => item.id === id);
+    //   if (checkSanPham) {
+    //     const capNhatGioHang = gioHang.map((item) => {
+    //       if (item.id === id) {
+    //         return {
+    //           ...item,
+    //           order: item.order + data.order,
+    //         };
+    //       } else {
+    //         return {
+    //           ...item,
+    //         };
+    //       }
+    //     });
+    //     localStorage.setItem("gioHang", JSON.stringify(capNhatGioHang));
+    //   } else {
+    //     gioHang.push(data);
+    //     localStorage.setItem("gioHang", JSON.stringify(gioHang));
+    //   }
+    // }
+    // capNhatGioHang();
+
+
   };
   //giảm số lượng
   const handleGiamSoLuong = (id) => {
@@ -233,6 +278,10 @@ function App() {
         return item;
       }
     });
+
+    //lưu sản phẩm
+    luuLocal('listSanPham', updatedListSanPham)
+
     // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
     setListSanPham(updatedListSanPham);
   };
@@ -248,6 +297,10 @@ function App() {
         return item;
       }
     });
+
+    //lưu sản phẩm
+    luuLocal('listSanPham', updatedListSanPham)
+
     // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
     setListSanPham(updatedListSanPham);
   };
@@ -279,8 +332,8 @@ function App() {
       gioHang.splice(index, 1);
     }
 
-    capNhatLocal(gioHang);
-    capNhatGioHang();
+    // capNhatLocal(gioHang);
+    // capNhatGioHang();
   };
 
   //click thanh toán
@@ -312,7 +365,7 @@ function App() {
             />
             <i className="fa-solid fa-magnifying-glass myGlass"></i>
             <div className="gioHang">
-              {gioHang.length > 0 ? (
+              {gioHang?.length > 0 ? (
                 <p onClick={handleGioHang}>{gioHang.length}</p>
               ) : null}
               <i
@@ -344,7 +397,7 @@ function App() {
         </div> */}
 
         <div className="mainContent">
-          {listSanPham?.map((item, index) => {
+          {listSanPham?.map((item) => {
             let { id, hinhAnh, tenSp, giaVon, giamGia, gif, order } = item;
             let giaBan = giaVon - (giaVon * giamGia) / 100;
             let data = {
@@ -355,7 +408,7 @@ function App() {
               order: 1,
             };
             return (
-              <div className="proItem" key={index}>
+              <div className="proItem" key={id}>
                 <div className="proContent">
                   <div className="hinhAnh">
                     <img src={hinhAnh} alt="hình" />
@@ -466,7 +519,7 @@ function App() {
             Đóng
             {/* <i className="fa-solid fa-xmark"></i> */}
           </button>
-          <p>Giỏ hàng của bạn ({gioHang.length})</p>
+          <p>Giỏ hàng của bạn ({gioHang?.length})</p>
 
 
         </div>
@@ -475,7 +528,9 @@ function App() {
           <table>
             <tbody>
               {gioHang?.map((item) => {
-                let { id, hinhAnh, tenSp, giaBan, order } = item;
+                let { id, hinhAnh, tenSp, order, giaVon, giamGia, gif, } = item;
+                let giaBan = giaVon - (giaVon * giamGia) / 100;
+
                 let thanhTien = giaBan * order;
                 tongTien += thanhTien;
 
@@ -490,9 +545,9 @@ function App() {
                         <span className="donGia">
                           {giaBan.toLocaleString()}đ
                         </span>
-                        <i className="fa-solid fa-minus giam"></i>
+                        <i className="fa-solid fa-minus giam" onClick={() => handleGiamSoLuong(id)}></i>
                         <span className="soLuong">{order}</span>
-                        <i className="fa-solid fa-plus tang"></i>
+                        <i className="fa-solid fa-plus tang" onClick={() => handleTangSoLuong(id)}></i>
                       </div>
                     </td>
                     <td className="thanhTien">
