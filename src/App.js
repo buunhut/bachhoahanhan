@@ -1,7 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./app.scss";
+//Owl Carousel Libraries and Module
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 
 function App() {
+  //của carousel
+  const options = {
+    margin: 30,
+    responsiveClass: true,
+    // nav: true,
+    autoplay: true,
+    smartSpeed: 500,
+    // loop: true,
+    responsive: {
+      // 0: {
+      //   items: 3,
+      // },
+      400: {
+        items: 3,
+      },
+      // 600: {
+      //   items: 5,
+      // },
+      768: {
+        items: 4,
+      },
+      992: {
+        items: 5,
+      },
+      1200: {
+        items: 6,
+      },
+      // 1280: {
+      //   items: 9,
+      // },
+    },
+  };
+
+  //function
+  const capNhatGioHang = () => {
+    const gioHang = JSON.parse(localStorage.getItem("gioHang"));
+    if (gioHang) {
+      setGioHang(gioHang);
+    }
+  };
+
+  const capNhatLocal = (gioHang) => {
+    localStorage.setItem("gioHang", JSON.stringify(gioHang));
+  };
+
   const data = [
     {
       id: 1,
@@ -51,7 +100,7 @@ function App() {
 
       hinhAnh:
         "https://acecookvietnam.vn/wp-content/uploads/2017/07/H%E1%BA%A3o-H%E1%BA%A3o-T%C3%B4m-chua-cay_down33_.png",
-      tenSp: "Mì Hảo Hảo tôm chua cay",
+      tenSp: "Bột ngọt Vedan bịch 1kg",
       giaVon: 150000,
       giamGia: 0,
       gif: 0,
@@ -62,7 +111,7 @@ function App() {
 
       hinhAnh:
         "https://acecookvietnam.vn/wp-content/uploads/2017/07/H%E1%BA%A3o-H%E1%BA%A3o-T%C3%B4m-chua-cay_down33_.png",
-      tenSp: "Mì Hảo Hảo tôm chua cay",
+      tenSp: "Nước tương Chinsu chay 500ml",
       giaVon: 150000,
       giamGia: 10,
       gif: 0,
@@ -116,6 +165,13 @@ function App() {
 
   const [listSanPham, setListSanPham] = useState(data);
 
+  const [gioHang, setGioHang] = useState([]);
+  let tongTien = 0;
+
+  useEffect(() => {
+    capNhatGioHang();
+  }, []);
+
   //click thêm vào giỏ
   const handleThemVaoGio = (data) => {
     const { id } = data;
@@ -125,9 +181,41 @@ function App() {
       }
       return item; // Giữ nguyên các sản phẩm khác
     });
-
     // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
     setListSanPham(updatedListSanPham);
+
+    //đọc store
+    const localStore = JSON.parse(localStorage.getItem("gioHang"));
+    if (localStore === null) {
+      gioHang.push(data);
+      //lưu local
+      localStorage.setItem("gioHang", JSON.stringify(gioHang));
+    } else {
+      setGioHang(localStore);
+      //kiểm tra xem có trùng sản phẩm không?
+      //trùng thì cộng dồn số lượng, không trùng thì thêm mới
+      const checkSanPham = gioHang.find((item) => item.id === id);
+      if (checkSanPham) {
+        const capNhatGioHang = gioHang.map((item) => {
+          if (item.id === id) {
+            return {
+              ...item,
+              order: item.order + data.order,
+            };
+          } else {
+            return {
+              ...item,
+            };
+          }
+        });
+        localStorage.setItem("gioHang", JSON.stringify(capNhatGioHang));
+      } else {
+        gioHang.push(data);
+        localStorage.setItem("gioHang", JSON.stringify(gioHang));
+      }
+    }
+
+    capNhatGioHang();
   };
   //giảm số lượng
   const handleGiamSoLuong = (id) => {
@@ -179,10 +267,26 @@ function App() {
   // };
 
   //click giỏ hàng
-  const [showCart, setShowCart] = useState(false)
+  const [showCart, setShowCart] = useState(false);
   const handleGioHang = () => {
-    setShowCart(!showCart)
-  }
+    setShowCart(!showCart);
+  };
+
+  //delete order
+  const handleDeleteItem = (id) => {
+    const index = gioHang.findIndex((item) => item.id === id);
+    if (index !== -1) {
+      gioHang.splice(index, 1);
+    }
+
+    capNhatLocal(gioHang);
+    capNhatGioHang();
+  };
+
+  //click thanh toán
+  const handleThanhToan = () => {
+    console.log("first");
+  };
 
   return (
     <div className="App">
@@ -208,29 +312,44 @@ function App() {
             />
             <i className="fa-solid fa-magnifying-glass myGlass"></i>
             <div className="gioHang">
-              <p onClick={handleGioHang}>10</p>
-              <i className="fa-solid fa-cart-shopping" onClick={handleGioHang}></i>
+              {gioHang.length > 0 ? (
+                <p onClick={handleGioHang}>{gioHang.length}</p>
+              ) : null}
+              <i
+                className="fa-solid fa-cart-shopping"
+                onClick={handleGioHang}
+              ></i>
             </div>
           </div>
         </div>
       </div>
 
       <div id="main">
+        {/* carousel */}
+        {/* <div id="myCarousel">
+          <OwlCarousel className="slider-items owl-carousel" {...options}>
+            <div class="item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" /></div>
+            <div class="item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" /></div>
+            <div class="item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" /></div>
+            <div class="item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" /></div>
+            <div class="item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" /></div>
+            <div class="item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" /></div>
+            <div class="item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" /></div>
+            <div class="item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" /></div>
+            <div class="item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" /></div>
+            <div class="item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" /></div>
+            <div class="item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" /></div>
+            <div class="item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" /></div>
+          </OwlCarousel>
+        </div> */}
+
         <div className="mainContent">
           {listSanPham?.map((item, index) => {
-            let {
-              id,
-              hinhAnh,
-              tenSp,
-              giaVon,
-              giamGia,
-              gif,
-              soLuongVisible,
-              order,
-            } = item;
+            let { id, hinhAnh, tenSp, giaVon, giamGia, gif, order } = item;
             let giaBan = giaVon - (giaVon * giamGia) / 100;
             let data = {
               id,
+              hinhAnh,
               tenSp,
               giaBan,
               order: 1,
@@ -335,86 +454,73 @@ function App() {
         </div>
       </div>
 
-      <div id="overlay" className={showCart ? "show" : ""} onClick={handleGioHang}>
-
-      </div>
+      <div
+        id="overlay"
+        className={showCart ? "show" : ""}
+        onClick={handleGioHang}
+      ></div>
 
       <div id="cart" className={showCart ? "showCart" : ""}>
-        <button type="button" className="myClose" onClick={handleGioHang}>
-          Đóng
-          {/* <i className="fa-solid fa-xmark"></i> */}
-        </button>
-        <p>Giỏ hàng của bạn</p>
-        <table>
-          <tbody>
-            <tr>
-              <td className="hinhAnh">
-                hình
-              </td>
-              <td>
-                Mì hảo hảo tôm chua cay
-                <div className="smallText">
-                  <span className="delete"><i className="fa-regular fa-trash-can"></i></span>
-                  <span className="donGia">3,400đ</span>
-                  <i className="fa-solid fa-minus giam"></i>
-                  <span className="soLuong">10</span>
-                  <i className="fa-solid fa-plus tang"></i>
-                </div>
-
-              </td>
-              <td className="thanhTien">
-                34,000đ
-              </td>
-            </tr>
-            <tr>
-              <td className="hinhAnh">
-                hình
-              </td>
-              <td>
-                Mì hảo hảo tôm chua cay
-                <div className="smallText">
-                  <span className="delete"><i className="fa-regular fa-trash-can"></i></span>
-                  <span className="donGia">360,400đ</span>
-                  <i className="fa-solid fa-minus giam"></i>
-                  <span className="soLuong">10</span>
-                  <i className="fa-solid fa-plus tang"></i>
-                </div>
-
-              </td>
-              <td className="thanhTien">
-                34,000đ
-              </td>
-            </tr>
-            <tr>
-              <td className="hinhAnh">
-                hình
-              </td>
-              <td>
-                Mì hảo hảo tôm chua cay
-                <div className="smallText">
-                  <span className="delete"><i className="fa-regular fa-trash-can"></i></span>
-                  <span className="donGia">79.903,400đ</span>
-                  <i className="fa-solid fa-minus giam"></i>
-                  <span className="soLuong">10</span>
-                  <i className="fa-solid fa-plus tang"></i>
-                </div>
-
-              </td>
-              <td className="thanhTien">
-                179.903,400đ
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="cartHeader">
+          <button type="button" className="myClose" onClick={handleGioHang}>
+            Đóng
+            {/* <i className="fa-solid fa-xmark"></i> */}
+          </button>
+          <p>Giỏ hàng của bạn ({gioHang.length})</p>
 
 
+        </div>
+
+        <div className="cartMain">
+          <table>
+            <tbody>
+              {gioHang?.map((item) => {
+                let { id, hinhAnh, tenSp, giaBan, order } = item;
+                let thanhTien = giaBan * order;
+                tongTien += thanhTien;
+
+                return (
+                  <tr key={id}>
+                    <td className="hinhAnh">
+                      <img src={hinhAnh} alt={tenSp} />
+                    </td>
+                    <td>
+                      {tenSp}
+                      <div className="smallText">
+                        <span className="donGia">
+                          {giaBan.toLocaleString()}đ
+                        </span>
+                        <i className="fa-solid fa-minus giam"></i>
+                        <span className="soLuong">{order}</span>
+                        <i className="fa-solid fa-plus tang"></i>
+                      </div>
+                    </td>
+                    <td className="thanhTien">
+                      <div>
+                        <span
+                          className="delete"
+                          onClick={() => handleDeleteItem(id)}
+                        >
+                          <i className="fa-regular fa-trash-can"></i>
+                        </span>
+                      </div>
+                      {thanhTien.toLocaleString()}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
 
         <div className="cartBottom">
           <div>
-            <p>Tổng: 91,000,000đ</p>
+            <p>Tổng: {tongTien.toLocaleString()}đ</p>
           </div>
           <div>
-            <button>Thanh toán</button>
+            <button type="button" onClick={handleThanhToan}>
+              Thanh toán
+            </button>
           </div>
         </div>
       </div>

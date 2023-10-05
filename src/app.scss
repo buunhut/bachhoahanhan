@@ -82,20 +82,27 @@
     }
   }
 }
+
 #main {
   background-color: whitesmoke;
   width: 100%;
   padding: 40px 10px;
   margin: 60px 0 40px 0;
 
+  #myCarousel {
+    width: 1100px;
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+
   .mainContent {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 20px;
     width: 1100px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 10px;
 
     .proItem {
       width: 200px;
@@ -268,6 +275,7 @@
     }
   }
 }
+
 #bottomMenu {
   width: 100%;
   background-color: red;
@@ -322,105 +330,145 @@
     right: 0;
   }
 
-  button.myClose {
-    text-align: center;
+  .cartHeader {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s;
-    &:hover {
-      background-color: rgb(233, 14, 14);
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 8;
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button.myClose {
+      text-align: center;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      &:hover {
+        background-color: rgb(233, 14, 14);
+      }
+    }
+    p {
+      margin-top: 10px;
+      font-size: 22px;
+      font-weight: 500;
+      text-align: center;
+      color: red;
     }
   }
-  p {
-    margin-top: 10px;
-    font-size: 22px;
-    font-weight: 500;
-    text-align: center;
-    color: red;
-  }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    tbody {
-      tr {
-        background-color: white;
-        &:nth-child(even) {
-          background-color: rgb(235, 243, 242);
-        }
-        td {
-          padding: 5px 10px;
-          border-bottom: 1px solid silver;
-
-          &.hinhAnh {
-            width: 60px;
-            height: 60px;
-            // border-radius: 8px;
-            padding: 3px;
-            // background-color: rgba(217, 206, 206, 0.455);
-            // color: white;
-            text-align: center;
+  .cartMain {
+    position: absolute;
+    top: 80px;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    z-index: 7;
+    padding: 10px;
+    height: calc(100% - 160px);
+    overflow: scroll;
+    padding: 0 10px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      // margin-top: 20px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      tbody {
+        tr {
+          background-color: white;
+          &:nth-child(even) {
+            background-color: rgba(245, 245, 245, 0.6);
           }
+          td {
+            padding: 10px;
+            border-bottom: 1px solid rgb(226, 226, 226);
 
-          .smallText {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 5px;
-            span.delete {
-              margin-right: 10px;
-              color: silver;
-              font-size: 14px;
-            }
-
-            span.donGia {
-              margin-right: 10px;
-              color: silver;
-              font-size: 14px;
-              font-weight: 500;
-              display: block;
+            &.hinhAnh {
               width: 80px;
-              // background-color: red;
-            }
-            i.giam {
-              font-size: 12px;
-              margin-right: 5px;
-              height: 18px;
-              width: 18px;
-              line-height: 17px;
+              height: 80px;
+              padding: 3px;
               text-align: center;
-              border-radius: 50%;
-              border: 1px solid silver;
-              background-color: white;
-              color: silver;
+              img {
+                width: 100%;
+                border-radius: 10px;
+              }
             }
-            span.soLuong {
-              color: red;
-              font-size: 14px;
-              font-weight: 500;
+
+            .smallText {
+              display: flex;
+              justify-content: space-between;
+              margin-top: 10px;
+
+              span.donGia {
+                margin-right: 10px;
+                color: silver;
+                font-size: 14px;
+                font-weight: 500;
+                display: block;
+                width: 80px;
+                // background-color: red;
+              }
+              i.giam {
+                font-size: 12px;
+                margin-right: 5px;
+                height: 18px;
+                width: 18px;
+                line-height: 17px;
+                text-align: center;
+                border-radius: 50%;
+                border: 1px solid silver;
+                background-color: white;
+                color: silver;
+              }
+              span.soLuong {
+                color: red;
+                font-size: 14px;
+                font-weight: 500;
+                background-color: rgba(226, 209, 209, 0.5);
+                display: block;
+                width: 50px;
+                text-align: right;
+                padding: 2px 5px;
+                border-radius: 10px;
+              }
+              i.tang {
+                font-size: 12px;
+                margin-left: 5px;
+                height: 18px;
+                width: 18px;
+                line-height: 18px;
+                text-align: center;
+                border-radius: 50%;
+                background-color: silver;
+                color: white;
+              }
             }
-            i.tang {
-              font-size: 12px;
-              margin-left: 5px;
-              height: 18px;
-              width: 18px;
-              line-height: 18px;
-              text-align: center;
-              border-radius: 50%;
-              background-color: silver;
-              color: white;
+            &.thanhTien {
+              text-align: right;
+              // width: 100px;
+              div {
+                margin-bottom: 10px;
+                span.delete {
+                  color: silver;
+                  font-size: 14px;
+                  transition: all 0.3s;
+                  &:hover {
+                    color: red;
+                  }
+                }
+              }
             }
-          }
-          &.thanhTien {
-            text-align: right;
           }
         }
       }
@@ -432,33 +480,35 @@
     bottom: 0;
     left: 0;
     right: 0;
-
+    z-index: 8;
     width: 100%;
-    height: 45px;
+    height: 60px;
     padding: 10px;
-    background-color: red;
+    background-color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    // border-top: 1px solid rgb(57, 57, 57);
     div {
       width: 50%;
-      height: 45px;
       // background-color: blue;
       p {
         // background-color: white;
         // line-height: 45px;
-        color: white;
-        font-size: 18px;
+        color: rgb(57, 48, 48);
+        font-size: 16px;
         font-weight: 500;
+        margin: 0;
       }
       button {
         margin: 0 auto;
         border: none;
+        border-radius: 20px;
+        height: 40px;
         background-color: red;
         color: white;
-        height: 44px;
         width: 100%;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: bold;
         cursor: pointer;
         transition: all 0.3s;
@@ -547,6 +597,12 @@
     width: 100%;
     padding: 40px 10px;
     margin: 60px 0 40px 0;
+
+    #myCarousel {
+      width: 850px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
     .mainContent {
       display: flex;
@@ -797,6 +853,12 @@
     padding: 40px 10px;
     margin: 60px 0 40px 0;
 
+    #myCarousel {
+      width: 640px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
     .mainContent {
       display: flex;
       justify-content: flex-start;
@@ -1046,6 +1108,12 @@
     // padding: 40px 0;
     // margin: 60px 0 40px 0;
 
+    #myCarousel {
+      width: 430px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
     .mainContent {
       width: 430px;
       // display: flex;
@@ -1294,6 +1362,12 @@
     width: 100%;
     padding: 40px 0px;
     // margin: 60px 0 60px 0;
+
+    #myCarousel {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
     .mainContent {
       display: flex;
