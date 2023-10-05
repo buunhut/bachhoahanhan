@@ -327,10 +327,29 @@ function App() {
 
   //delete order
   const handleDeleteItem = (id) => {
-    const index = gioHang.findIndex((item) => item.id === id);
-    if (index !== -1) {
-      gioHang.splice(index, 1);
-    }
+    const updatedListSanPham = listSanPham.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          order: 0
+        };
+      } else {
+        return item;
+      }
+    });
+
+    //lưu sản phẩm
+    luuLocal('listSanPham', updatedListSanPham)
+
+    // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
+    setListSanPham(updatedListSanPham);
+
+
+
+    // const index = gioHang.findIndex((item) => item.id === id);
+    // if (index !== -1) {
+    //   gioHang.splice(index, 1);
+    // }
 
     // capNhatLocal(gioHang);
     // capNhatGioHang();
