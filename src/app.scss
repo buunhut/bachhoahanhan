@@ -39,15 +39,16 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      gap: 10px;
       .myBack {
-        width: 40px;
+        width: 50px;
         text-align: center;
         color: white;
         cursor: pointer;
       }
       .inputItem {
         position: relative;
-        width: calc(100% - 60px);
+        width: calc(100% - 0px);
 
         input {
           width: 100%;
@@ -85,7 +86,7 @@
         position: relative;
         // bottom: 0px;
         // right: 15px;
-        margin-left: 10px;
+        margin-right: 20px;
         text-align: center;
         cursor: pointer;
         p {
@@ -348,13 +349,14 @@
 
 #bottomMenu {
   width: 100%;
+  height: 46px;
   background-color: red;
-  padding: 5px 10px;
+  padding: 0 10px;
   position: fixed;
   bottom: 0;
   .myContainer {
-    max-width: 416px;
-    margin: 0 auto;
+    max-width: 414px;
+    margin: 5px auto 0;
 
     .bottomItem {
       display: flex;
@@ -377,7 +379,7 @@
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 3;
+  z-index: 16;
   background-color: rgba(0, 0, 0, 0.8);
   display: none;
   &.show {
@@ -391,7 +393,7 @@
   position: fixed;
   top: 0;
   bottom: 0;
-  z-index: 4;
+  z-index: 16;
   background-color: whitesmoke;
   transition: right 0.3s ease;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
@@ -1645,12 +1647,34 @@
     right: -100%;
   }
 
-  #danhMuc {
-    position: absolute;
-    bottom: 50px;
+  // #danhMuc {
+  //   display: block;
+  //   position: fixed;
+  //   bottom: 46px;
+  //   height: calc(100vh - 46px);
+  //   width: 100%;
+  //   z-index: 15;
+  //   background-color: rgba(0, 0, 0, 0.8);
+  // }
+
+  #danhMucContent {
+    background-color: whitesmoke;
+    position: fixed;
+    z-index: 16;
+    bottom: -300px;
     width: 100%;
-    height: 500px;
-    background-color: red;
+    height: 300px;
+    border-radius: 20px 20px 0 0;
+    padding: 30px;
+    overflow: scroll;
+    transition: all 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+    &.show {
+      bottom: 46px;
+    }
+    p {
+      cursor: pointer;
+    }
   }
 }
 @media screen and (max-width: 400px) {

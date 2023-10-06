@@ -405,12 +405,16 @@ function App() {
   const [search, setSearch] = useState(false)
   const [keyword, setKeyword] = useState("")
   const [showGoiY, setShowGoiY] = useState(false)
+  const [showDanhMuc, setShowDanhMuc] = useState(false)
+  const [showCart, setShowCart] = useState(false);
+
 
 
   const handleClickSearch = () => {
     setSearch(true)
     setShowGoiY(true)
     backToTop()
+    lockScroll()
 
   }
 
@@ -424,6 +428,7 @@ function App() {
       setKeyword('')
       setShowGoiY(false)
     }
+    unlockScroll()
 
   }
 
@@ -667,10 +672,34 @@ function App() {
   // };
 
   //click giỏ hàng
-  const [showCart, setShowCart] = useState(false);
   const handleGioHang = () => {
-    setShowCart(!showCart);
+    setShowCart(!showCart)
+    if (showCart === false) {
+      lockScroll()
+
+
+    } else {
+      unlockScroll()
+    }
+
   };
+
+  const handleOverlay = () => {
+    setShowCart(false)
+    setShowDanhMuc(false)
+    unlockScroll()
+  };
+
+  const lockScroll = () => {
+    // Khi bạn muốn khoá cuộn trang
+    document.body.style.overflow = "hidden";
+
+  }
+  const unlockScroll = () => {
+    // Khi bạn muốn mở khoá cuộn trang
+    document.body.style.overflow = "auto";
+
+  }
 
   //delete order
   const handleDeleteItem = (id) => {
@@ -736,14 +765,6 @@ function App() {
     console.log("first");
   };
 
-  //click trang chủ
-  const handleTrangChu = () => {
-    setKeyword('')
-    setSearch(false)
-    setKetQuaTimKiem([])
-    setShowGoiY(false)
-
-  }
 
   //click backToTop
   const [showBackToTop, setShowBackToTop] = useState(false)
@@ -759,6 +780,34 @@ function App() {
       top: 0,
       behavior: "smooth",
     });
+  }
+
+  //click trang chủ
+  const handleTrangChu = () => {
+    setKeyword('')
+    setSearch(false)
+    setKetQuaTimKiem([])
+    setShowGoiY(false)
+
+  }
+
+
+  //click danhMuc
+  const handleDanhMuc = () => {
+    setShowDanhMuc(!showDanhMuc)
+    if (showDanhMuc === false) {
+      lockScroll()
+
+
+    } else {
+      unlockScroll()
+    }
+
+  }
+
+  //
+  const handleDanhMucItem = () => {
+    console.log("first")
   }
 
   return (
@@ -1046,9 +1095,42 @@ function App() {
       </div>
 
 
-      <div id="danhMuc">
-        <h1>danh mục</h1>
-      </div>
+
+      {
+        showDanhMuc === true ? (
+          <>
+            <div id="danhMuc" onClick={handleDanhMuc}>
+            </div>
+
+
+            <div id="danhMucContent" className={showDanhMuc === true ? "show" : ""}>
+              <p onClick={handleDanhMucItem}>danh mục 1 </p>
+              <p onClick={handleDanhMucItem}>danh mục 1 </p>
+              <p onClick={handleDanhMucItem}>danh mục 1 </p>
+              <p onClick={handleDanhMucItem}>danh mục 1 </p>
+              <p onClick={handleDanhMucItem}>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+              <p>danh mục 1 </p>
+            </div>
+          </>
+        ) : ""
+      }
+
+
+
 
 
 
@@ -1060,7 +1142,7 @@ function App() {
               <i className="fa-solid fa-house"></i>
               <p>Trang chủ</p>
             </div>
-            <div>
+            <div onClick={handleDanhMuc}>
               <i className="fa-solid fa-layer-group"></i>
               <p>Danh mục</p>
             </div>
@@ -1087,7 +1169,7 @@ function App() {
       <div
         id="overlay"
         className={showCart ? "show" : ""}
-        onClick={handleGioHang}
+        onClick={handleOverlay}
       ></div>
 
       <div id="cart" className={showCart ? "showCart" : ""}>
