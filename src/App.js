@@ -726,18 +726,39 @@ function App() {
         </div>
         <div className="myContainer">
           <div className="mySearch">
-            <input
-              type="text"
-              id="timKiemSanPham"
-              name="timKiemSanPham"
-              value={keyword}
-              placeholder="Xin chào, bạn muốn tìm gì hôm nay"
-              onKeyUp={timKiemSanPham}
-              onChange={timKiemSanPham}
-              onClick={handleClickSearch}
 
-            />
-            <i className="fa-solid fa-magnifying-glass myGlass"></i>
+            {
+              search === true ? (<i className="fa-solid fa-angle-left myBack"
+                onClick={handleTrangChu}
+
+              ></i>) : ""
+            }
+
+
+
+            <div className="inputItem">
+
+
+              <input
+                type="text"
+                id="timKiemSanPham"
+                name="timKiemSanPham"
+                value={keyword}
+                placeholder="Xin chào, bạn muốn tìm gì hôm nay"
+                onKeyUp={timKiemSanPham}
+                onChange={timKiemSanPham}
+                onClick={handleClickSearch}
+
+              />
+              <i className="fa-solid fa-magnifying-glass myGlass"></i>
+
+              {
+                search === true ? (<i className="fa-solid fa-circle-xmark closeSearch" onClick={handleTrangChu}></i>) : ""
+              }
+
+            </div>
+
+
             <div className="gioHang">
               {gioHang?.length > 0 ? (
                 <p onClick={handleGioHang}>{gioHang.length}</p>

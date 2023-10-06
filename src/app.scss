@@ -32,29 +32,53 @@
       }
     }
     .mySearch {
-      position: relative;
-      input {
-        width: calc(100% - 50px);
-        height: 28px;
-        border: none;
-        outline: none;
-        padding: 0 30px;
-        border-radius: 20px;
-        &::placeholder {
-          color: black;
-          font-weight: 500px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .myBack {
+        width: 40px;
+        text-align: center;
+        color: white;
+        cursor: pointer;
+      }
+      .inputItem {
+        position: relative;
+        width: calc(100% - 100px);
+
+        input {
+          width: 100%;
+          height: 30px;
+          border: none;
+          outline: none;
+          padding: 0 30px;
+          border-radius: 20px;
+          &::placeholder {
+            color: black;
+            font-weight: 500px;
+          }
+        }
+
+        .myGlass {
+          position: absolute;
+          top: 7px;
+          left: 10px;
+          color: red;
+        }
+
+        .closeSearch {
+          position: absolute;
+          top: 7px;
+          right: 10px;
+          color: rgb(215, 215, 215);
+          cursor: pointer;
         }
       }
-      .myGlass {
-        position: absolute;
-        top: 6px;
-        left: 8px;
-        color: red;
-      }
+
       .gioHang {
-        position: absolute;
-        bottom: 0px;
-        right: 15px;
+        // position: absolute;
+        // bottom: 0px;
+        // right: 15px;
+        margin-left: 20px;
         text-align: center;
         cursor: pointer;
         p {
