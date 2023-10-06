@@ -429,6 +429,8 @@ function App() {
 
   // console.log(search)
   const timKiemSanPham = (event) => {
+    setShowGoiY(false)
+
 
     setKeyword(event.target.value);
     // console.log(keyword)
