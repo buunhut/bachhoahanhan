@@ -410,6 +410,7 @@ function App() {
   const handleClickSearch = () => {
     setSearch(true)
     setShowGoiY(true)
+    backToTop()
 
   }
 
@@ -422,9 +423,9 @@ function App() {
       setSearch(false)
       setKeyword('')
       setShowGoiY(false)
-
-
     }
+    backToTop()
+
   }
 
   // console.log(search)
