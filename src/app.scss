@@ -5,8 +5,6 @@
   font-family: "Roboto", sans-serif;
 }
 
-
-
 #topMenu {
   width: 100%;
   background-color: red;
@@ -87,9 +85,15 @@
 
 #main {
   background-color: whitesmoke;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0;
+  right: 0;
   width: 100%;
   padding: 40px 10px;
   margin: 60px 0 40px 0;
+  overflow: scroll;
 
   #myCarousel {
     width: 1100px;
@@ -103,6 +107,7 @@
     flex-wrap: wrap;
     gap: 20px;
     width: 1100px;
+
     margin: 0 auto;
     padding: 0 10px;
 
