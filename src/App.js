@@ -237,6 +237,10 @@ function App() {
 
   useEffect(() => {
     goiLocal('listSanPham')
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   //tìm kiếm sản phẩm
@@ -739,6 +743,22 @@ function App() {
 
   }
 
+  //click backToTop
+  const [showBackToTop, setShowBackToTop] = useState(false)
+  const handleScroll = () => {
+    if (window.scrollY > 100) {
+      setShowBackToTop(true);
+    } else {
+      setShowBackToTop(false);
+    }
+  };
+  const backToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
   return (
     <div className="App">
       <div id="topMenu">
@@ -805,7 +825,6 @@ function App() {
 
       {
         showGoiY === true ? (
-
           <div className="goiYTimKiem">
             <span onClick={goiYTimKiem}>bia</span>
             <span onClick={goiYTimKiem}>sữa tươi</span>
@@ -1015,7 +1034,17 @@ function App() {
 
           }
         </div>
+
+
+
+
+
+
+
       </div>
+
+
+
 
       <div id="bottomMenu">
         <div className="myContainer">
@@ -1042,6 +1071,10 @@ function App() {
             </div>
           </div>
         </div>
+
+
+
+
       </div>
 
       <div
@@ -1116,6 +1149,23 @@ function App() {
           </div>
         </div>
       </div>
+
+
+      {/* backtotop */}
+      {
+        showBackToTop === true ? (
+          <div id="backToTop" onClick={backToTop}>
+            <i className="fa-solid fa-angles-up"></i>
+          </div>
+        ) : ""
+      }
+
+
+
+
+
+
+
     </div>
   );
 }
