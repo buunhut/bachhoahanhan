@@ -120,8 +120,10 @@
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   span {
-    margin-right: 20px;
+    // margin-right: 20px;
     background-color: rgb(241, 241, 241);
     color: black;
     padding: 5px 10px;
