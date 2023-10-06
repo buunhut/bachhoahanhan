@@ -400,10 +400,12 @@ function App() {
   const [ketQuaTimKiem, setKetQuaTimKiem] = useState([])
   const [search, setSearch] = useState(false)
   const [keyword, setKeyword] = useState("")
+  const [showGoiY, setShowGoiY] = useState(false)
 
 
   const handleClickSearch = () => {
     setSearch(true)
+    setShowGoiY(true)
 
   }
 
@@ -422,7 +424,7 @@ function App() {
   const timKiemSanPham = (event) => {
 
     setKeyword(event.target.value);
-    console.log(keyword)
+    // console.log(keyword)
 
     // console.log(keyword)
 
@@ -444,6 +446,30 @@ function App() {
 
 
   };
+
+  //gợi ý tìm kiếm
+  const goiYTimKiem = (event) => {
+    const value = event.target.innerText;
+    setKeyword(value)
+
+    if (value !== '') {
+      setSearch(true)
+
+      const result = listSanPham.filter((item) => {
+        return boDauTiengViet(item.tenSp).includes(boDauTiengViet(value))
+      })
+      setKetQuaTimKiem(result)
+
+
+    } else {
+      setSearch(true)
+      setKetQuaTimKiem([])
+
+    }
+
+    setShowGoiY(false)
+
+  }
 
   //click thêm vào giỏ
   const handleThemVaoGio = (data) => {
@@ -706,6 +732,8 @@ function App() {
     setKeyword('')
     setSearch(false)
     setKetQuaTimKiem([])
+    setShowGoiY(false)
+
   }
 
   return (
@@ -772,7 +800,21 @@ function App() {
         </div>
       </div>
 
+      {
+        showGoiY === true ? (
+
+          <div className="goiYTimKiem">
+            <span onClick={goiYTimKiem}>bia</span>
+            <span onClick={goiYTimKiem}>sữa tươi</span>
+            <span onClick={goiYTimKiem}>nước mắm</span>
+            <span onClick={goiYTimKiem}>đường cát</span>
+          </div>
+        ) : ""
+      }
+
       <div id="main" onClick={handleUnClickSearch}>
+
+
         {/* carousel */}
         {/* <div id="myCarousel">
           <OwlCarousel className="slider-items owl-carousel" {...options}>

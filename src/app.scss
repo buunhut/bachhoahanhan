@@ -75,13 +75,16 @@
       }
 
       .gioHang {
-        // position: absolute;
+        position: relative;
         // bottom: 0px;
         // right: 15px;
         margin-left: 20px;
         text-align: center;
         cursor: pointer;
         p {
+          position: absolute;
+          top: 0;
+          left: 0;
           font-size: 12px;
           font-weight: bold;
           position: absolute;
@@ -104,6 +107,30 @@
         }
       }
     }
+  }
+}
+
+.goiYTimKiem {
+  padding: 20px;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  display: flex;
+  span {
+    margin-right: 20px;
+    background-color: rgb(241, 241, 241);
+    color: black;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    width: fit-content;
   }
 }
 
