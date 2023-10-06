@@ -41,21 +41,25 @@ function App() {
 
   //function
   const luuLocal = (key, data) => {
-    localStorage.setItem(key, JSON.stringify(data))
-  }
+    localStorage.setItem(key, JSON.stringify(data));
+  };
 
   const goiLocal = (key) => {
-    if (key === 'listSanPham') {
-      const data = JSON.parse(localStorage.getItem(key))
+    if (key === "listSanPham") {
+      const data = JSON.parse(localStorage.getItem(key));
       if (data) {
-        setListSanPham(data)
+        //khách có đặt hàng không
+        const order = data.filter((item) => item.order > 0);
+        if (order.length > 0) {
+          setListSanPham(data);
+        }
       }
     }
-  }
+  };
 
   const capNhatLocal = (key, data) => {
     localStorage.setItem(key, JSON.stringify(data));
-  }
+  };
 
   // const capNhatGioHang = () => {
   //   const gioHang = JSON.parse(localStorage.getItem("gioHang"));
@@ -67,7 +71,6 @@ function App() {
   // const capNhatLocal = (gioHang) => {
   //   localStorage.setItem("gioHang", JSON.stringify(gioHang));
   // };
-
 
   //dữ liệu gọi từ backend
   const data = [
@@ -118,9 +121,9 @@ function App() {
       id: 5,
 
       hinhAnh:
-        "https://acecookvietnam.vn/wp-content/uploads/2017/07/H%E1%BA%A3o-H%E1%BA%A3o-T%C3%B4m-chua-cay_down33_.png",
+        "https://storage.googleapis.com/mm-online-bucket/ecommerce-website/uploads/media/256191.jpg",
       tenSp: "Bột ngọt Vedan bịch 1kg",
-      giaVon: 150000,
+      giaVon: 22000,
       giamGia: 0,
       gif: 0,
       order: 0,
@@ -128,10 +131,9 @@ function App() {
     {
       id: 6,
 
-      hinhAnh:
-        "https://acecookvietnam.vn/wp-content/uploads/2017/07/H%E1%BA%A3o-H%E1%BA%A3o-T%C3%B4m-chua-cay_down33_.png",
-      tenSp: "Nước tương Chinsu chay 500ml",
-      giaVon: 150000,
+      hinhAnh: "https://alohay.vn/cdn/uploadv2/news/1596595864_13.jpg",
+      tenSp: "Nước tương Chinsu chai 250ml",
+      giaVon: 9000,
       giamGia: 10,
       gif: 0,
       order: 0,
@@ -140,10 +142,10 @@ function App() {
       id: 7,
 
       hinhAnh:
-        "https://acecookvietnam.vn/wp-content/uploads/2017/07/H%E1%BA%A3o-H%E1%BA%A3o-T%C3%B4m-chua-cay_down33_.png",
-      tenSp: "Mì Hảo Hảo tôm chua cay",
-      giaVon: 150000,
-      giamGia: 10,
+        "https://product.hstatic.net/200000073345/product/tuong_ot_cholimex_pet_270gr_7e6adf3e97fc4f0aa3959b8e834abe9e_1024x1024.jpg",
+      tenSp: "Tương ớt Cholimex chai 270g",
+      giaVon: 7000,
+      giamGia: 12,
       gif: 0,
       order: 0,
     },
@@ -151,8 +153,8 @@ function App() {
       id: 8,
 
       hinhAnh:
-        "https://acecookvietnam.vn/wp-content/uploads/2017/07/H%E1%BA%A3o-H%E1%BA%A3o-T%C3%B4m-chua-cay_down33_.png",
-      tenSp: "Mì Hảo Hảo tôm chua cay",
+        "https://saphavi.eu/cdn/shop/products/8936017362331_1.jpg?v=1575477392",
+      tenSp: "Nước mắm Chinsu chai 500ml",
       giaVon: 12000,
       giamGia: 3,
       gif: 1,
@@ -162,21 +164,20 @@ function App() {
       id: 9,
 
       hinhAnh:
-        "https://acecookvietnam.vn/wp-content/uploads/2017/07/H%E1%BA%A3o-H%E1%BA%A3o-T%C3%B4m-chua-cay_down33_.png",
-      tenSp: "Mì Hảo Hảo tôm chua cay",
-      giaVon: 12000,
-      giamGia: 3,
+        "https://product.hstatic.net/1000074072/product/bich_fino_sua_tuoi_-_khong_duong_c6990e9228e343b3b76885870916fec6_master.png",
+      tenSp: "Sữa tươi Vinamilk bịch 220ml",
+      giaVon: 7000,
+      giamGia: 5,
       gif: 1,
       order: 0,
     },
     {
       id: 10,
 
-      hinhAnh:
-        "https://acecookvietnam.vn/wp-content/uploads/2017/07/H%E1%BA%A3o-H%E1%BA%A3o-T%C3%B4m-chua-cay_down33_.png",
-      tenSp: "Mì Hảo Hảo tôm chua cay",
-      giaVon: 12000,
-      giamGia: 3,
+      hinhAnh: "https://phuhuong.vn/watermark/sua/vnm-1l-duong.gif",
+      tenSp: "Sữa tươi Vinamilk hộp 1 lít",
+      giaVon: 89000,
+      giamGia: 19,
       gif: 1,
       order: 0,
     },
@@ -184,15 +185,12 @@ function App() {
 
   const [listSanPham, setListSanPham] = useState(data);
 
-
   //lấy ra những sản phẩm đã đặt
-  let tongTien = 0
+  let tongTien = 0;
   const gioHang = listSanPham?.filter((item) => {
     if (item.order > 0) {
-      return item
+      return item;
     }
-
-
     // let { id, hinhAnh, tenSp, giaVon, giamGia, gif, order } = item;
     // if (order > 0) {
     //   let giaBan = giaVon - (giaVon * giamGia) / 100;
@@ -202,13 +200,33 @@ function App() {
     //   }
     //   return data
     // }
-  })
-
-  console.log(gioHang)
+  });
 
   useEffect(() => {
-    goiLocal('listSanPham')
+    goiLocal("listSanPham");
   }, []);
+
+  //tìm kiếm sản phẩm
+  // Hàm chuyển đổi dấu tiếng Việt sang không dấu
+  const boDauTiengViet = (str) => {
+    return str
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/đ/g, "d")
+      .replace(/[^a-z0-9\s]/g, ""); // Loại bỏ các ký tự không phải chữ cái, số, hoặc khoảng trắng
+  };
+
+  const [ketQuaTimKiem, setKetQuaTimKiem] = useState([]);
+
+  const timKiemSanPham = (event) => {
+    const keyword = boDauTiengViet(event.target.value);
+    const result = listSanPham.filter((item) => {
+      return boDauTiengViet(item.tenSp).includes(keyword);
+    });
+
+    setKetQuaTimKiem(result);
+  };
 
   //click thêm vào giỏ
   const handleThemVaoGio = (data) => {
@@ -221,12 +239,10 @@ function App() {
     });
 
     //lưu sản phẩm
-    luuLocal('listSanPham', updatedListSanPham)
+    luuLocal("listSanPham", updatedListSanPham);
 
     // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
     setListSanPham(updatedListSanPham);
-
-
 
     // // đọc store
     // const localStore = JSON.parse(localStorage.getItem("gioHang"));
@@ -259,9 +275,8 @@ function App() {
     //   }
     // }
     // capNhatGioHang();
-
-
   };
+
   //giảm số lượng
   const handleGiamSoLuong = (id) => {
     const updatedListSanPham = listSanPham.map((item) => {
@@ -280,11 +295,12 @@ function App() {
     });
 
     //lưu sản phẩm
-    luuLocal('listSanPham', updatedListSanPham)
+    luuLocal("listSanPham", updatedListSanPham);
 
     // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
     setListSanPham(updatedListSanPham);
   };
+
   //tăng số lượng
   const handleTangSoLuong = (id) => {
     const updatedListSanPham = listSanPham.map((item) => {
@@ -299,7 +315,7 @@ function App() {
     });
 
     //lưu sản phẩm
-    luuLocal('listSanPham', updatedListSanPham)
+    luuLocal("listSanPham", updatedListSanPham);
 
     // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
     setListSanPham(updatedListSanPham);
@@ -331,7 +347,7 @@ function App() {
       if (item.id === id) {
         return {
           ...item,
-          order: 0
+          order: 0,
         };
       } else {
         return item;
@@ -339,12 +355,10 @@ function App() {
     });
 
     //lưu sản phẩm
-    luuLocal('listSanPham', updatedListSanPham)
+    luuLocal("listSanPham", updatedListSanPham);
 
     // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
     setListSanPham(updatedListSanPham);
-
-
 
     // const index = gioHang.findIndex((item) => item.id === id);
     // if (index !== -1) {
@@ -380,7 +394,10 @@ function App() {
           <div className="mySearch">
             <input
               type="text"
+              id="timKiemSanPham"
+              name="timKiemSanPham"
               placeholder="Xin chào, bạn muốn tìm gì hôm nay"
+              onKeyUp={timKiemSanPham}
             />
             <i className="fa-solid fa-magnifying-glass myGlass"></i>
             <div className="gioHang">
@@ -416,86 +433,167 @@ function App() {
         </div> */}
 
         <div className="mainContent">
-          {listSanPham?.map((item) => {
-            let { id, hinhAnh, tenSp, giaVon, giamGia, gif, order } = item;
-            let giaBan = giaVon - (giaVon * giamGia) / 100;
-            let data = {
-              id,
-              hinhAnh,
-              tenSp,
-              giaBan,
-              order: 1,
-            };
-            return (
-              <div className="proItem" key={id}>
-                <div className="proContent">
-                  <div className="hinhAnh">
-                    <img src={hinhAnh} alt="hình" />
+          {ketQuaTimKiem.length > 0
+            ? ketQuaTimKiem?.map((item) => {
+              let { id, hinhAnh, tenSp, giaVon, giamGia, gif, order } = item;
+              let giaBan = giaVon - (giaVon * giamGia) / 100;
+              let data = {
+                id,
+                hinhAnh,
+                tenSp,
+                giaBan,
+                order: 1,
+              };
+              return (
+                <div className="proItem" key={id}>
+                  <div className="proContent">
+                    <div className="hinhAnh">
+                      <img src={hinhAnh} alt="hình" />
+                    </div>
+                    <div className="tenSp">
+                      <p>{tenSp}</p>
+                    </div>
+                    <div className="giaSp">
+                      <p className="giaBan">{giaBan.toLocaleString()}đ</p>
+                      <p className="giaAo">
+                        {giamGia > 0 ? giaVon.toLocaleString() + "đ" : null}
+                      </p>
+                    </div>
                   </div>
-                  <div className="tenSp">
-                    <p>{tenSp}</p>
-                  </div>
-                  <div className="giaSp">
-                    <p className="giaBan">{giaBan.toLocaleString()}đ</p>
-                    <p className="giaAo">
-                      {giamGia > 0 ? giaVon.toLocaleString() + "đ" : null}
-                    </p>
-                  </div>
-                </div>
 
-                <div>
-                  {order > 0 ? (
-                    <div className="soLuong">
-                      <div>
-                        <i
-                          className="fa-solid fa-minus giam"
-                          onClick={() => handleGiamSoLuong(id)}
-                        ></i>
-                      </div>
-                      <div>
-                        {/* <input
+                  <div>
+                    {order > 0 ? (
+                      <div className="soLuong">
+                        <div>
+                          <i
+                            className="fa-solid fa-minus giam"
+                            onClick={() => handleGiamSoLuong(id)}
+                          ></i>
+                        </div>
+                        <div>
+                          {/* <input
                           type="text"
                           id={id}
                           name={id}
                           value={order.toLocaleString()}
                           onChange={(event) => handleChangeSoLuong(id, event)}
                         /> */}
-                        <h3>{order.toLocaleString()}</h3>
+                          <h3>{order.toLocaleString()}</h3>
+                        </div>
+                        <div>
+                          <i
+                            className="fa-solid fa-plus tang"
+                            onClick={() => handleTangSoLuong(id)}
+                          ></i>
+                        </div>
                       </div>
-                      <div>
-                        <i
-                          className="fa-solid fa-plus tang"
-                          onClick={() => handleTangSoLuong(id)}
-                        ></i>
-                      </div>
+                    ) : (
+                      <button onClick={() => handleThemVaoGio(data)}>
+                        Thêm vào giỏ
+                      </button>
+                    )}
+                  </div>
+                  {giamGia > 0 ? (
+                    <div className="giamGia">
+                      {" "}
+                      <p>{`-${giamGia}%`}</p>{" "}
+                    </div>
+                  ) : null}
+                  <div className="heart">
+                    <i className="fa-regular fa-heart"></i>
+                  </div>
+
+                  {gif === 1 ? (
+                    <div className="gif">
+                      {" "}
+                      <i className="fa-solid fa-gift"></i>{" "}
                     </div>
                   ) : (
-                    <button onClick={() => handleThemVaoGio(data)}>
-                      Thêm vào giỏ
-                    </button>
+                    ""
                   )}
                 </div>
-                {giamGia > 0 ? (
-                  <div className="giamGia">
-                    {" "}
-                    <p>{`-${giamGia}%`}</p>{" "}
+              );
+            })
+            : listSanPham?.map((item) => {
+              let { id, hinhAnh, tenSp, giaVon, giamGia, gif, order } = item;
+              let giaBan = giaVon - (giaVon * giamGia) / 100;
+              let data = {
+                id,
+                hinhAnh,
+                tenSp,
+                giaBan,
+                order: 1,
+              };
+              return (
+                <div className="proItem" key={id}>
+                  <div className="proContent">
+                    <div className="hinhAnh">
+                      <img src={hinhAnh} alt="hình" />
+                    </div>
+                    <div className="tenSp">
+                      <p>{tenSp}</p>
+                    </div>
+                    <div className="giaSp">
+                      <p className="giaBan">{giaBan.toLocaleString()}đ</p>
+                      <p className="giaAo">
+                        {giamGia > 0 ? giaVon.toLocaleString() + "đ" : null}
+                      </p>
+                    </div>
                   </div>
-                ) : null}
-                <div className="heart">
-                  <i className="fa-regular fa-heart"></i>
-                </div>
 
-                {gif === 1 ? (
-                  <div className="gif">
-                    {" "}
-                    <i className="fa-solid fa-gift"></i>{" "}
+                  <div>
+                    {order > 0 ? (
+                      <div className="soLuong">
+                        <div>
+                          <i
+                            className="fa-solid fa-minus giam"
+                            onClick={() => handleGiamSoLuong(id)}
+                          ></i>
+                        </div>
+                        <div>
+                          {/* <input
+                          type="text"
+                          id={id}
+                          name={id}
+                          value={order.toLocaleString()}
+                          onChange={(event) => handleChangeSoLuong(id, event)}
+                        /> */}
+                          <h3>{order.toLocaleString()}</h3>
+                        </div>
+                        <div>
+                          <i
+                            className="fa-solid fa-plus tang"
+                            onClick={() => handleTangSoLuong(id)}
+                          ></i>
+                        </div>
+                      </div>
+                    ) : (
+                      <button onClick={() => handleThemVaoGio(data)}>
+                        Thêm vào giỏ
+                      </button>
+                    )}
                   </div>
-                ) : (
-                  ""
-                )}
-              </div>
-            );
-          })}
+                  {giamGia > 0 ? (
+                    <div className="giamGia">
+                      {" "}
+                      <p>{`-${giamGia}%`}</p>{" "}
+                    </div>
+                  ) : null}
+                  <div className="heart">
+                    <i className="fa-regular fa-heart"></i>
+                  </div>
+
+                  {gif === 1 ? (
+                    <div className="gif">
+                      {" "}
+                      <i className="fa-solid fa-gift"></i>{" "}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              );
+            })}
         </div>
       </div>
 
@@ -539,15 +637,13 @@ function App() {
             {/* <i className="fa-solid fa-xmark"></i> */}
           </button>
           <p>Giỏ hàng của bạn ({gioHang?.length})</p>
-
-
         </div>
 
         <div className="cartMain">
           <table>
             <tbody>
               {gioHang?.map((item) => {
-                let { id, hinhAnh, tenSp, order, giaVon, giamGia, gif, } = item;
+                let { id, hinhAnh, tenSp, order, giaVon, giamGia, gif } = item;
                 let giaBan = giaVon - (giaVon * giamGia) / 100;
 
                 let thanhTien = giaBan * order;
@@ -564,9 +660,15 @@ function App() {
                         <span className="donGia">
                           {giaBan.toLocaleString()}đ
                         </span>
-                        <i className="fa-solid fa-minus giam" onClick={() => handleGiamSoLuong(id)}></i>
+                        <i
+                          className="fa-solid fa-minus giam"
+                          onClick={() => handleGiamSoLuong(id)}
+                        ></i>
                         <span className="soLuong">{order}</span>
-                        <i className="fa-solid fa-plus tang" onClick={() => handleTangSoLuong(id)}></i>
+                        <i
+                          className="fa-solid fa-plus tang"
+                          onClick={() => handleTangSoLuong(id)}
+                        ></i>
                       </div>
                     </td>
                     <td className="thanhTien">
