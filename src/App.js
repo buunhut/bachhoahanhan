@@ -441,6 +441,28 @@ function App() {
   //click thêm vào giỏ
   const handleThemVaoGio = (data) => {
     const { id } = data;
+
+    //xử lý cho search
+    if (ketQuaTimKiem.length > 0) {
+      const updateKetQuaTimKiem = ketQuaTimKiem?.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            order: 1
+
+          }
+        } else {
+          return item
+        }
+      })
+
+      setKetQuaTimKiem(updateKetQuaTimKiem)
+    }
+
+
+
+
+
     const updatedListSanPham = listSanPham.map((item) => {
       if (item.id === id) {
         return { ...item, order: 1 }; // Thay đổi trạng thái soLuong thành true
