@@ -63,6 +63,10 @@ function App() {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
+  const xoaLocal = (key) => {
+    localStorage.removeItem(key)
+  }
+
   // const capNhatGioHang = () => {
   //   const gioHang = JSON.parse(localStorage.getItem("gioHang"));
   //   if (gioHang) {
@@ -226,7 +230,7 @@ function App() {
 
   const [ketQuaTimKiem, setKetQuaTimKiem] = useState([])
   const [search, setSearch] = useState(false)
-  console.log(search)
+  // console.log(search)
   const timKiemSanPham = (event) => {
 
 
@@ -319,6 +323,7 @@ function App() {
       })
 
       setKetQuaTimKiem(updateKetQuaTimKiem)
+
     }
 
 
@@ -342,6 +347,19 @@ function App() {
 
     // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
     setListSanPham(updatedListSanPham);
+
+    //không có order thì xoá bỏ local
+    const order = updatedListSanPham.filter(item => item.order > 0)
+    if (order.length === 0) {
+      xoaLocal('listSanPham')
+    }
+
+
+
+
+
+
+
   };
 
   //tăng số lượng
@@ -439,11 +457,19 @@ function App() {
       }
     });
 
+
     //lưu sản phẩm
     luuLocal('listSanPham', updatedListSanPham)
 
     // Sau khi cập nhật, bạn có thể cập nhật state listSanPham
     setListSanPham(updatedListSanPham);
+
+    //không có order thì xoá bỏ local
+    const order = updatedListSanPham.filter(item => item.order > 0)
+    if (order.length === 0) {
+      xoaLocal('listSanPham')
+    }
+
 
 
 
@@ -608,86 +634,92 @@ function App() {
               })
 
               :
-              ketQuaTimKiem?.map((item) => {
-                let { id, hinhAnh, tenSp, giaVon, giamGia, gif, order } = item;
-                let giaBan = giaVon - (giaVon * giamGia) / 100;
-                let data = {
-                  id,
-                  hinhAnh,
-                  tenSp,
-                  giaBan,
-                  order: 1,
-                };
-                return (
-                  <div className="proItem" key={id}>
-                    <div className="proContent">
-                      <div className="hinhAnh">
-                        <img src={hinhAnh} alt="hình" />
-                      </div>
-                      <div className="tenSp">
-                        <p>{tenSp}</p>
-                      </div>
-                      <div className="giaSp">
-                        <p className="giaBan">{giaBan.toLocaleString()}đ</p>
-                        <p className="giaAo">
-                          {giamGia > 0 ? giaVon.toLocaleString() + "đ" : null}
-                        </p>
-                      </div>
-                    </div>
 
-                    <div>
-                      {order > 0 ? (
-                        <div className="soLuong">
-                          <div>
-                            <i
-                              className="fa-solid fa-minus giam"
-                              onClick={() => handleGiamSoLuong(id)}
-                            ></i>
-                          </div>
-                          <div>
-                            {/* <input
+              ketQuaTimKiem.length > 0 ?
+
+
+                ketQuaTimKiem?.map((item) => {
+                  let { id, hinhAnh, tenSp, giaVon, giamGia, gif, order } = item;
+                  let giaBan = giaVon - (giaVon * giamGia) / 100;
+                  let data = {
+                    id,
+                    hinhAnh,
+                    tenSp,
+                    giaBan,
+                    order: 1,
+                  };
+                  return (
+                    <div className="proItem" key={id}>
+                      <div className="proContent">
+                        <div className="hinhAnh">
+                          <img src={hinhAnh} alt="hình" />
+                        </div>
+                        <div className="tenSp">
+                          <p>{tenSp}</p>
+                        </div>
+                        <div className="giaSp">
+                          <p className="giaBan">{giaBan.toLocaleString()}đ</p>
+                          <p className="giaAo">
+                            {giamGia > 0 ? giaVon.toLocaleString() + "đ" : null}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div>
+                        {order > 0 ? (
+                          <div className="soLuong">
+                            <div>
+                              <i
+                                className="fa-solid fa-minus giam"
+                                onClick={() => handleGiamSoLuong(id)}
+                              ></i>
+                            </div>
+                            <div>
+                              {/* <input
                           type="text"
                           id={id}
                           name={id}
                           value={order.toLocaleString()}
                           onChange={(event) => handleChangeSoLuong(id, event)}
                         /> */}
-                            <h3>{order.toLocaleString()}</h3>
+                              <h3>{order.toLocaleString()}</h3>
+                            </div>
+                            <div>
+                              <i
+                                className="fa-solid fa-plus tang"
+                                onClick={() => handleTangSoLuong(id)}
+                              ></i>
+                            </div>
                           </div>
-                          <div>
-                            <i
-                              className="fa-solid fa-plus tang"
-                              onClick={() => handleTangSoLuong(id)}
-                            ></i>
-                          </div>
+                        ) : (
+                          <button onClick={() => handleThemVaoGio(data)}>
+                            Thêm vào giỏ
+                          </button>
+                        )}
+                      </div>
+                      {giamGia > 0 ? (
+                        <div className="giamGia">
+                          {" "}
+                          <p>{`-${giamGia}%`}</p>{" "}
+                        </div>
+                      ) : null}
+                      <div className="heart">
+                        <i className="fa-regular fa-heart"></i>
+                      </div>
+
+                      {gif === 1 ? (
+                        <div className="gif">
+                          {" "}
+                          <i className="fa-solid fa-gift"></i>{" "}
                         </div>
                       ) : (
-                        <button onClick={() => handleThemVaoGio(data)}>
-                          Thêm vào giỏ
-                        </button>
+                        ""
                       )}
                     </div>
-                    {giamGia > 0 ? (
-                      <div className="giamGia">
-                        {" "}
-                        <p>{`-${giamGia}%`}</p>{" "}
-                      </div>
-                    ) : null}
-                    <div className="heart">
-                      <i className="fa-regular fa-heart"></i>
-                    </div>
+                  );
+                })
 
-                    {gif === 1 ? (
-                      <div className="gif">
-                        {" "}
-                        <i className="fa-solid fa-gift"></i>{" "}
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                );
-              })
+                : (<p className="ketQuaTimKiem">Không tìm thấy sản phẩm</p>)
 
           }
         </div>
