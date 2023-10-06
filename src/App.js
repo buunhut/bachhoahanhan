@@ -412,10 +412,13 @@ function App() {
   const handleUnClickSearch = () => {
     if (ketQuaTimKiem.length > 0) {
       setSearch(true)
+      setShowGoiY(false)
 
     } else {
       setSearch(false)
       setKeyword('')
+      setShowGoiY(false)
+
 
     }
   }
