@@ -814,6 +814,7 @@ function App() {
             <span onClick={goiYTimKiem}>hảo hảo</span>
             <span onClick={goiYTimKiem}>cholimex</span>
             <span onClick={goiYTimKiem}>bột ngọt</span>
+            <span onClick={goiYTimKiem}>nước tương</span>
           </div>
         ) : ""
       }
