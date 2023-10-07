@@ -435,6 +435,7 @@ function App() {
   // console.log(search)
   const timKiemSanPham = (event) => {
     setShowGoiY(false)
+    // backToTop()
 
 
     setKeyword(event.target.value);
@@ -1094,40 +1095,59 @@ function App() {
 
       </div>
 
+      {showDanhMuc ? (
+        <div id="danhMuc" onClick={handleDanhMuc} >
+
+        </div>
+
+      ) : ""}
 
 
-      {
-        showDanhMuc === true ? (
-          <>
-            <div id="danhMuc" onClick={handleDanhMuc}>
+
+
+      <div id="danhMucContent" className={showDanhMuc ? "showDanhMuc" : ""} >
+        <div className="danhMucItem">
+
+          <OwlCarousel className="slider-items owl-carousel" {...options}>
+            <div className="itemDetail">
+              <p>danh mục 1</p>
+            </div>
+            <div className="itemDetail">
+              <p>danh mục 2</p>
+            </div>
+            <div className="itemDetail">
+              <p>danh mục 3</p>
+            </div>
+            <div className="itemDetail">
+              <p>danh mục 4</p>
+            </div>
+            <div className="itemDetail">
+              <p>danh mục 5</p>
+            </div>
+            <div className="itemDetail">
+              <p>danh mục 6</p>
+            </div>
+            <div className="itemDetail">
+              <p>danh mục 7</p>
+            </div>
+            <div className="itemDetail">
+              <p>danh mục 8</p>
+            </div>
+            <div className="itemDetail">
+              <p>danh mục 9</p>
+            </div>
+            <div className="itemDetail">
+              <p>danh mục 10</p>
             </div>
 
+          </OwlCarousel>
 
-            <div id="danhMucContent" className={showDanhMuc === true ? "show" : ""}>
-              <p onClick={handleDanhMucItem}>danh mục 1 </p>
-              <p onClick={handleDanhMucItem}>danh mục 1 </p>
-              <p onClick={handleDanhMucItem}>danh mục 1 </p>
-              <p onClick={handleDanhMucItem}>danh mục 1 </p>
-              <p onClick={handleDanhMucItem}>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-              <p>danh mục 1 </p>
-            </div>
-          </>
-        ) : ""
-      }
+
+        </div>
+      </div>
+
+
+
 
 
 
@@ -1166,8 +1186,7 @@ function App() {
 
       </div>
 
-      <div
-        id="overlay"
+      <div id="overlay"
         className={showCart ? "show" : ""}
         onClick={handleOverlay}
       ></div>
@@ -1179,8 +1198,6 @@ function App() {
             {/* <i className="fa-solid fa-xmark"></i> */}
           </button>
           <p>Giỏ hàng của bạn ({gioHang?.length})</p>
-
-
         </div>
 
         <div className="cartMain">
@@ -1239,8 +1256,6 @@ function App() {
         </div>
       </div>
 
-
-      {/* backtotop */}
       {
         showBackToTop === true ? (
           <div id="backToTop" onClick={backToTop}>
