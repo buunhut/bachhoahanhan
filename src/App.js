@@ -8,22 +8,16 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 function App() {
   //của carousel
   const options = {
-    margin: 30,
+    margin: 20,
     responsiveClass: true,
-    // nav: true,
     autoplay: true,
-    smartSpeed: 500,
-    // loop: true,
+    smartSpeed: 1000, // Đặt thời gian chuyển động nhanh hơn tại đây (ví dụ: 1 giây)
+    autoplayTimeout: 1000,
+    loop: true,
     responsive: {
-      // 0: {
-      //   items: 3,
-      // },
       400: {
         items: 3,
       },
-      // 600: {
-      //   items: 5,
-      // },
       768: {
         items: 4,
       },
@@ -33,9 +27,6 @@ function App() {
       1200: {
         items: 6,
       },
-      // 1280: {
-      //   items: 9,
-      // },
     },
   };
 
