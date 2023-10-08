@@ -11,12 +11,15 @@ function App() {
     margin: 20,
     responsiveClass: true,
     autoplay: true,
-    smartSpeed: 1000, // Đặt thời gian chuyển động nhanh hơn tại đây (ví dụ: 1 giây)
-    autoplayTimeout: 1000,
+    smartSpeed: 1200, // Đặt thời gian chuyển động nhanh hơn tại đây (ví dụ: 1 giây)
+    autoplayTimeout: 1200,
     loop: true,
     responsive: {
-      400: {
+      300: {
         items: 3,
+      },
+      400: {
+        items: 4,
       },
       768: {
         items: 4,
@@ -780,6 +783,8 @@ function App() {
     setSearch(false)
     setKetQuaTimKiem([])
     setShowGoiY(false)
+    setShowDanhMuc(false)
+    unlockScroll()
 
   }
 
